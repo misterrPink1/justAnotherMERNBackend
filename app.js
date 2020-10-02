@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const placesRoutes = require('./routes/places-routes');
+const usersRoutes = require('./routes/users-routes');
 const HttpError = require('./models/http-error');
 
 const app = express();
@@ -9,6 +10,8 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use('/api/places', placesRoutes);
+
+app.use('/api/users', usersRoutes);
 
 //catch all unsupported routes and return a 404 error
 app.use((req, res, next) => {
