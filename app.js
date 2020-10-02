@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 
 app.use('/api/places', placesRoutes);
 
+//catch all unsupported routes and return a 404 error
 app.use((req, res, next) => {
     const error = new HttpError('No Route found', 404);
     /*throw error since we are syncronous not async. If async we can use next(error)*/ 
