@@ -1,8 +1,7 @@
 const { v4:uuid } = require("uuid");
 
 const HttpError = require('../models/http-error');
-
-
+//const { delete } = require("../routes/places-routes");
 
 const DUMMY_PLACES = [
     {
@@ -17,6 +16,15 @@ const DUMMY_PLACES = [
         creator: 'u1'
     }
 ]
+
+const getAllPlaces = (req, res, next) => {
+    if (!DUMMY_PLACES){
+        return next(new HttpError('Could not find any places.', 404));
+    }
+
+    res.json({DUMMY_PLACES});
+
+}
 
 const getPlaceById = (req, res, next) => {
     const placeId = req.params.pid; // { pid: 'p1'}
@@ -77,9 +85,12 @@ const updatePlace = (req, res, next) => {
 };
 
 const deletePlace = (req, res, next) => {
-        
+    const placeId = req.params.pid;
+    DUMMY_PLACES = DUMMY_PLACES.filter(p => p.id !== placeId);
+    res.status(200).json({ message: 'Place with id ' + placeId + ' deleted.'});        
 };
 
+exports.getAllPlaces = getAllPlaces;
 exports.getPlaceById = getPlaceById;
 exports.getPlaceByUserId = getPlaceByUserId;
 exports.createPlace = createPlace;
