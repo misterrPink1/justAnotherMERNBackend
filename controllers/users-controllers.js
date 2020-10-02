@@ -25,6 +25,12 @@ const getUsers = (req, res, next) => {
 const signup = (req, res, next) => {
     const { firstName, lastName, password, email } = req.body;
 
+    const hasUser = DUMMY_USERS.find( u => u.email === email);
+
+    if(hasUser){
+        throw new HttpError('User already exists.', 422);
+    }
+
     const newUser = {
         id: uuid(),
         firstName,
@@ -40,6 +46,8 @@ const signup = (req, res, next) => {
 
 const login = (req, res, next) => {
     const { email, password } = req.body;
+
+    
 
     const identifiedUser = DUMMY_USERS.find(u => u.email === email);
     if(!identifiedUser || identifiedUser.password !== password) {
