@@ -53,8 +53,6 @@ const signup = (req, res, next) => {
 const login = (req, res, next) => {
     const { email, password } = req.body;
 
-    
-
     const identifiedUser = DUMMY_USERS.find(u => u.email === email);
     if(!identifiedUser || identifiedUser.password !== password) {
         throw new HttpError('Could not identify user, creds seem to be wrong.', 401);
